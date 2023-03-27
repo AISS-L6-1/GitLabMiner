@@ -15,7 +15,6 @@ class ProjectServiceTest {
     @DisplayName("Test de getAllProjects")
     void getAllProjects() {
         List<Project> projectList = projectService.getAllProjects();
-        System.out.println(projectList.get(0));
-        System.out.println("hola mundo (me quiero morir)");
+        System.out.println(projectList);
     }
 }
