@@ -16,6 +16,6 @@ class ProjectServiceTest {
     void getAllProjects() {
         List<Project> projectList = projectService.getAllProjects();
         System.out.println(projectList.get(0));
-        System.out.println("hola mundo");
+        System.out.println("hola mundo (me quiero morir)");
     }
 }
