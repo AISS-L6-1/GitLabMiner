@@ -1,6 +1,7 @@
 package aiss.GitLabMiner.service;
 
 import aiss.GitLabMiner.model.Commit;
+import aiss.GitLabMiner.model.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -35,5 +36,19 @@ public class CommitService {
             commitList.addAll(Arrays.asList(commitArray));
         }
         return commitList;
+    }
+
+    @Autowired
+    ProjectService projectService;
+    public Commit getCommitFromId(String id) {
+        List<Project> projectList = projectService.getAllProjects();
+        List<Commit> commitList = projectList.stream().flatMap(project -> getAllCommits(project.getId()).stream()).toList();
+        return commitList.stream().filter(commit -> commit.getId().equals(id)).findFirst().orElse(null);
+    }
+
+    public Commit getCommitFromEmail(String email) {
+        List<Project> projectList = projectService.getAllProjects();
+        List<Commit> commitList = projectList.stream().flatMap(project -> getAllCommits(project.getId()).stream()).toList();
+        return commitList.stream().filter(commit -> commit.getCommitterEmail().equals(email)).findFirst().orElse(null);
     }
 }

@@ -17,4 +17,12 @@ class ProjectServiceTest {
         List<Project> projectList = projectService.getAllProjects();
         System.out.println(projectList);
     }
+
+    @Test
+    @DisplayName("Test de getProjectFromId")
+    void getProjectFromId() {
+        Integer id = 44673732;
+        Project project = projectService.getProjectFromId(id);
+        System.out.println(project);
+    }
 }
