@@ -33,14 +33,14 @@ public class IssueService {
         List<String> linkHeader = httpResponseHeaders.get("Link");
         List<Issue> issueList = new ArrayList<>();
 
-        Integer paginaActual = 1;   //siempre obtenemos la primera pagina al hacer el get paginaActual inicializada con valor 1
+        // Integer paginaActual = 1;   //siempre obtenemos la primera pagina al hacer el get paginaActual inicializada con valor 1
         Integer paginaUltima = ultimaPagina(linkHeader);
 
-        for (int i = paginaActual; i <= paginaUltima; i++) {
-            Issue[] issueArray = restTemplate.exchange(url + "?page=" + paginaActual.toString(), HttpMethod.GET, httpRequest, Issue[].class).getBody();
+        for (int i = 1; i <= paginaUltima; i++) {
+            Issue[] issueArray = restTemplate.exchange(url + "?page=" + String.valueOf(i), HttpMethod.GET, httpRequest, Issue[].class).getBody();
             issueList.addAll(Arrays.asList(issueArray));
         }
-
+        System.out.println(paginaUltima);
         return issueList;
     }
 }

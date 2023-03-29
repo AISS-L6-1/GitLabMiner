@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static utils.funciones.ultimaPagina;
+
 @Service
 public class CommitService {
     @Autowired
@@ -26,17 +28,10 @@ public class CommitService {
         ResponseEntity<Commit[]> httpResponse = restTemplate.exchange(url, HttpMethod.GET, httpRequest, Commit[].class);
         HttpHeaders httpResponseHeaders = httpResponse.getHeaders();
         List<String> linkHeader = httpResponseHeaders.get("Link");
-        String primeraUrl = linkHeader.get(0).split(", ")[1];
-        Integer inicio = primeraUrl.indexOf("page=") + "page=".length();
-        Integer fin = primeraUrl.indexOf("&per_page=");
-        Integer paginaActual = Integer.valueOf(primeraUrl.substring(inicio, fin));
-        String ultimaUrl = linkHeader.get(0).split(", ")[2];
-        inicio = ultimaUrl.indexOf("page=") + "page=".length();
-        fin = ultimaUrl.indexOf("&per_page=");
-        Integer paginaUltima = Integer.valueOf(ultimaUrl.substring(inicio, fin));
+        Integer paginaUltima = ultimaPagina(linkHeader);
         List<Commit> commitList = new ArrayList<>();
-        for (int i = paginaActual; i <= paginaUltima; i++) {
-            Commit[] commitArray = restTemplate.exchange(url + "?page=" + paginaActual.toString(), HttpMethod.GET, httpRequest, Commit[].class).getBody();
+        for (int i = 1; i <= paginaUltima; i++) {
+            Commit[] commitArray = restTemplate.exchange(url + "?page=" + String.valueOf(i), HttpMethod.GET, httpRequest, Commit[].class).getBody();
             commitList.addAll(Arrays.asList(commitArray));
         }
         return commitList;

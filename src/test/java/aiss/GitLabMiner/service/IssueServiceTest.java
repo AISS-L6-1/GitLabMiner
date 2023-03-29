@@ -15,7 +15,7 @@ class IssueServiceTest {
     IssueService issueService;
     @Test
     void getAllIssues() {
-        List<Issue> issueList = issueService.getAllIssues(44673732);
+        List<Issue> issueList = issueService.getAllIssues(20699);
         System.out.println(issueList);
     }
 }

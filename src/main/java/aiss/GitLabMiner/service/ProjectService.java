@@ -10,8 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static utils.funciones.ultimaPagina;
 
 @Service
 public class ProjectService {
@@ -24,6 +27,14 @@ public class ProjectService {
         httpHeadersRequest.setBearerAuth(token);
         HttpEntity<Project[]> httpRequest = new HttpEntity<>(null, httpHeadersRequest);
         ResponseEntity<Project[]> httpResponse = restTemplate.exchange(url, HttpMethod.GET, httpRequest, Project[].class);
-        return Arrays.asList(httpResponse.getBody());
+        HttpHeaders httpResponseHeaders = httpResponse.getHeaders();
+        List<String> linkHeader = httpResponseHeaders.get("Link");
+        Integer paginaUltima = ultimaPagina(linkHeader);
+        List<Project> projectList = new ArrayList<>();
+        for (int i = 1; i <= paginaUltima; i++) {
+            Project[] projectArray = restTemplate.exchange(url + "?page=" + String.valueOf(i), HttpMethod.GET, httpRequest, Project[].class).getBody();
+            projectList.addAll(Arrays.asList(projectArray));
+        }
+        return projectList;
     }
 }
