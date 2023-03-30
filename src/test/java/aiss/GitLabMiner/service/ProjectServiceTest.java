@@ -14,14 +14,14 @@ class ProjectServiceTest {
     @Test
     @DisplayName("Test de getAllProjects")
     void getAllProjects() {
-        List<Project> projectList = projectService.getAllProjects();
+        List<Project> projectList = projectService.getAllProjects(20);
         System.out.println(projectList);
     }
 
     @Test
     @DisplayName("Test de getProjectFromId")
     void getProjectFromId() {
-        Integer id = 44673732;
+        Integer id = 44773587; // está en las primeras 20 pags
         Project project = projectService.getProjectFromId(id);
         System.out.println(project);
     }

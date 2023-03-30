@@ -16,21 +16,8 @@ class CommitServiceTest {
     @Test
     @DisplayName("Test de getAllCommits")
     void getAllCommits() {
-        List<Commit> commitList = commitService.getAllCommits(44673732, 5, 6);
+        List<Commit> commitList = commitService.getAllCommits(44773587, 50, 6);
         System.out.println(commitList);
     }
 
-    @Test
-    @DisplayName("Test de getCommitFromId")
-    void getCommitFromId() {
-        Commit commit = commitService.getCommitFromId("ee6e291274fcca03801261f1fd0684aa32c6d140");
-        System.out.println(commit);
-    }
-
-    @Test
-    @DisplayName("Test de getCommitFromEmail")
-    void getCommitFromEmail() {
-        Commit commit = commitService.getCommitFromEmail("henry@pitest.org");
-        System.out.println(commit);
-    }
 }
