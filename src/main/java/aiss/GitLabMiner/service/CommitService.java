@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static utils.funciones.ultimaPagina;
 
 @Service
 public class CommitService {
@@ -48,17 +47,17 @@ public class CommitService {
         HttpEntity<Commit[]> httpRequest = new HttpEntity<>(null, httpHeadersRequest);
         ResponseEntity<Commit[]> httpResponse = restTemplate.exchange(url, HttpMethod.GET, httpRequest, Commit[].class);
         HttpHeaders httpResponseHeaders = httpResponse.getHeaders();
-        List<String> linkHeader = httpResponseHeaders.get("Link");
 
-        Integer paginaUltima = ultimaPagina(linkHeader);
-        if(maxPages != null && maxPages < paginaUltima){
-            paginaUltima = maxPages;
-        }
+        String siguientePagina = utils.funciones.getNextPageUrl(httpResponseHeaders);
+        Integer page = 1;
         List<Commit> commitList = new ArrayList<>();
-        for (int i = 1; i <= paginaUltima; i++) {
-            Commit[] commitArray = restTemplate.exchange(url + "?page=" + String.valueOf(i), HttpMethod.GET, httpRequest, Commit[].class).getBody();
-            commitList.addAll(Arrays.asList(commitArray));
+        while (siguientePagina != null && (maxPages != null && page < maxPages)) {//hay que comprobar que maxPages es diferente de null para poder evaluar <, funciona gracias a la evaluacion perezosa
+            ResponseEntity<Commit[]> responseEntity = restTemplate.exchange(url + "?page=" + String.valueOf(page), HttpMethod.GET, httpRequest, Commit[].class);
+            commitList.addAll(Arrays.asList(responseEntity.getBody()));
+            siguientePagina = utils.funciones.getNextPageUrl(responseEntity.getHeaders());
+            page++;
         }
+        System.out.println(commitList.size());
         return commitList;
     }
 }
