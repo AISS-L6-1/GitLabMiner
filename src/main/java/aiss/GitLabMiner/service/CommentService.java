@@ -1,7 +1,6 @@
 package aiss.GitLabMiner.service;
 
 import aiss.GitLabMiner.model.Comment;
-import aiss.GitLabMiner.model.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -16,14 +15,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 @Service
 public class CommentService {
     @Autowired
     RestTemplate restTemplate;
 
-    public List<Comment> getAllComments(Integer maxPages, Integer sinceDays)
-    throws HttpClientErrorException {
-        String url="https://gitlab.com/api/v4/projects/3842996/issues/31/discussions";
+    public List<Comment> getCommentsFromId(Integer id, Integer iId, Integer maxPages, Integer sinceDays)
+    throws HttpClientErrorException{
+        String url="https://gitlab.com/api/v4/projects/"+id.toString()+"/issues/"+iId.toString()+"/notes";
         List<Comment> commentList= new ArrayList<>();
         String token = "glpat-yzJhzxFSm4fasdqqwCKD";
 
@@ -43,8 +43,8 @@ public class CommentService {
 
         HttpHeaders httpHeadersRequest = new HttpHeaders();
         httpHeadersRequest.setBearerAuth(token);
-        HttpEntity<Project[]> httpRequest = new HttpEntity<>(null, httpHeadersRequest);
-        ResponseEntity<Project[]> httpResponse = restTemplate.exchange(url, HttpMethod.GET, httpRequest, Project[].class);
+        HttpEntity<Comment[]> httpRequest = new HttpEntity<>(null, httpHeadersRequest);
+        ResponseEntity<Comment[]> httpResponse = restTemplate.exchange(url, HttpMethod.GET, httpRequest, Comment[].class);
         HttpHeaders httpResponseHeaders = httpResponse.getHeaders();
 
         String siguientePagina = utils.funciones.getNextPageUrl(httpResponseHeaders);
@@ -58,6 +58,5 @@ public class CommentService {
         }
         System.out.println(commentList.size());
         return commentList;
-
     }
 }
