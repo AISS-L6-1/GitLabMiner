@@ -10,18 +10,46 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "id",
-    "iid",
-    "project_id",
-    "title",
-    "description",
-    "state",
-    "created_at",
-    "updated_at",
-    "closed_at",
-    "labels",
-    "upvotes",
-    "downvotes"
+        "id",
+        "iid",
+        "project_id",
+        "title",
+        "description",
+        "state",
+        "created_at",
+        "updated_at",
+        "closed_at",
+        "closed_by",
+        "labels",
+        "milestone",
+        "assignees",
+        "author",
+        "type",
+        "assignee",
+        "user_notes_count",
+        "merge_requests_count",
+        "upvotes",
+        "downvotes",
+        "due_date",
+        "confidential",
+        "discussion_locked",
+        "issue_type",
+        "web_url",
+        "time_stats",
+        "task_completion_status",
+        "weight",
+        "blocking_issues_count",
+        "has_tasks",
+        "task_status",
+        "_links",
+        "references",
+        "severity",
+        "moved_to_id",
+        "service_desk_reply_to",
+        "epic_iid",
+        "epic",
+        "iteration",
+        "health_status"
 })
 @Generated("jsonschema2pojo")
 public class Issue {
@@ -177,18 +205,23 @@ public class Issue {
         this.downvotes = downvotes;
     }
 
+    @JsonProperty("author")
     public User getAuthor() {
         return author;
     }
 
+    @JsonProperty("author")
     public void setAuthor(User author) {
         this.author = author;
     }
+
+    @JsonProperty("asignee")
 
     public User getAsignee() {
         return asignee;
     }
 
+    @JsonProperty("asignee")
     public void setAsignee(User asignee) {
         this.asignee = asignee;
     }
