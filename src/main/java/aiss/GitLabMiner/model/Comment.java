@@ -13,7 +13,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "id",
     "body",
     "created_at",
-    "updated_at"
+    "updated_at",
+        "author"
 })
 @Generated("jsonschema2pojo")
 public class Comment {
@@ -29,6 +30,17 @@ Todas de tipo String
     private String created_at;
     @JsonProperty("updated_at")
     private String updated_at;
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    @JsonProperty("author")
+    private User author;
 
     @JsonProperty("id")
     public String getId() {
@@ -89,6 +101,8 @@ Todas de tipo String
         sb.append('=');
         sb.append(((this.updated_at == null)?"<null>":this.updated_at));
         sb.append(',');
+        sb.append('=');
+        sb.append(((this.author == null)?"<null>":this.author));
         if (sb.charAt((sb.length()- 1)) == ',') {
             sb.setCharAt((sb.length()- 1), ']');
         } else {
