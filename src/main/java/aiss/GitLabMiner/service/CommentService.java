@@ -1,6 +1,7 @@
 package aiss.GitLabMiner.service;
 
 import aiss.GitLabMiner.model.Comment;
+import aiss.GitLabMiner.model.Issue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -24,10 +25,10 @@ public class CommentService {
     public List<Comment> getCommentsFromId(Integer id, Integer iId, Integer maxPages, Integer sinceDays)
     throws HttpClientErrorException{
         String url="https://gitlab.com/api/v4/projects/"+id.toString()+"/issues/"+iId.toString()+"/notes";
-        List<Comment> commentList= new ArrayList<>();
-        String token = "glpat-yzJhzxFSm4fasdqqwCKD";
 
-        // compruebo que los parametros no sean nulos
+
+        //como queremos que nuestros parametros(sinceDays y maxPages) sean opcionales, debemos comprobar cual de ellos no es nulo
+        // y en funcion de si existe uno o ambos añadir la ? en la posicion correspondiente
         if (sinceDays != null && maxPages != null) {
             LocalDateTime since = LocalDateTime.now().minusDays(sinceDays);
             url.concat("?since=" + since + "&" + "maxPages=" + maxPages);
@@ -36,27 +37,30 @@ public class CommentService {
                 LocalDateTime since = LocalDateTime.now().minusDays(sinceDays);
                 url.concat("?since=" + since);
             }
-            else {
+            else if (maxPages != null){
                 url.concat("?maxPages=" + maxPages);
             }
         }
 
+        String token = "glpat-yzJhzxFSm4fasdqqwCKD";
         HttpHeaders httpHeadersRequest = new HttpHeaders();
         httpHeadersRequest.setBearerAuth(token);
         HttpEntity<Comment[]> httpRequest = new HttpEntity<>(null, httpHeadersRequest);
         ResponseEntity<Comment[]> httpResponse = restTemplate.exchange(url, HttpMethod.GET, httpRequest, Comment[].class);
         HttpHeaders httpResponseHeaders = httpResponse.getHeaders();
 
-        String siguientePagina = utils.funciones.getNextPageUrl(httpResponseHeaders);
-        Integer page = 1;
+        List<Comment> commentList = new ArrayList<>();
+        commentList.addAll(Arrays.asList(httpResponse.getBody()));
 
-        while (siguientePagina != null && (maxPages != null && page < maxPages)) { //compruebo que maxPages sea distinto de null para poder avanzar
+        String siguientePagina = utils.funciones.getNextPageUrl(httpResponseHeaders);
+        Integer page = 2;
+
+        while (siguientePagina != null && (maxPages != null ?false:true && page < maxPages)) { //compruebo que maxPages sea distinto de null para poder avanzar
             ResponseEntity<Comment[]> responseEntity = restTemplate.exchange(url + "?page=" + String.valueOf(page), HttpMethod.GET, httpRequest, Comment[].class);
             commentList.addAll(Arrays.asList(responseEntity.getBody()));
             siguientePagina = utils.funciones.getNextPageUrl(responseEntity.getHeaders());
             page++;
         }
-        System.out.println(commentList.size());
         return commentList;
     }
 }

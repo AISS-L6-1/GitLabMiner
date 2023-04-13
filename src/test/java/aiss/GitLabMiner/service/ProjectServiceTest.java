@@ -14,7 +14,7 @@ class ProjectServiceTest {
     @Test
     @DisplayName("Test de getAllProjects")
     void getAllProjects() {
-        List<Project> projectList = projectService.getAllProjects(20,null);
+        List<Project> projectList = projectService.getAllProjects(2,2);
         System.out.println(projectList);
     }
 

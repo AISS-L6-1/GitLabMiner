@@ -17,7 +17,7 @@ class IssueServiceTest {
     @Test
     @DisplayName("Test de getAllIssues")
     void getAllIssues() {
-        List<Issue> issueList = issueService.getAllIssues(20699, 20,5);
+        List<Issue> issueList = issueService.getAllIssues(179611, 1,2);
         System.out.println(issueList);
     }
 }
