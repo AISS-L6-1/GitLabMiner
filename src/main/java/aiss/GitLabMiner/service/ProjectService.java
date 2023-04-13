@@ -63,13 +63,13 @@ public class ProjectService {
         return projectList;
     }
 
-//    public Project getProjectFromId(Integer id) {
-//        String url = "https://gitlab.com/api/v4/projects" + "/" + id.toString();
-//        String token = "glpat-yzJhzxFSm4fasdqqwCKD";
-//        HttpHeaders httpHeadersRequest = new HttpHeaders();
-//        httpHeadersRequest.setBearerAuth(token);
-//        HttpEntity<Project> httpRequest = new HttpEntity<>(null, httpHeadersRequest);
-//        ResponseEntity<Project> httpResponse = restTemplate.exchange(url, HttpMethod.GET, httpRequest, Project.class);
-//        return httpResponse.getBody();
-//    }
+    public Project getProjectFromId(Integer id) {
+        String url = "https://gitlab.com/api/v4/projects" + "/" + id.toString();
+        String token = "glpat-yzJhzxFSm4fasdqqwCKD";
+        HttpHeaders httpHeadersRequest = new HttpHeaders();
+        httpHeadersRequest.setBearerAuth(token);
+        HttpEntity<Project> httpRequest = new HttpEntity<>(null, httpHeadersRequest);
+        ResponseEntity<Project> httpResponse = restTemplate.exchange(url, HttpMethod.GET, httpRequest, Project.class);
+        return httpResponse.getBody();
+    }
 }

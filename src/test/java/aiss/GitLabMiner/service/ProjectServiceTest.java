@@ -18,11 +18,11 @@ class ProjectServiceTest {
         System.out.println(projectList);
     }
 
-//    @Test
-//    @DisplayName("Test de getProjectFromId")
-//    void getProjectFromId() {
-//        Integer id = 44773587; // está en las primeras 20 pags
-//        Project project = projectService.getProjectFromId(id);
-//        System.out.println(project);
-//    }
+    @Test
+    @DisplayName("Test de getProjectFromId")
+    void getProjectFromId() {
+        Integer id = 44773587; // está en las primeras 20 pags
+        Project project = projectService.getProjectFromId(id);
+        System.out.println(project);
+    }
 }

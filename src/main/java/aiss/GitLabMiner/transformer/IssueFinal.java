@@ -7,9 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 public class IssueFinal {
-    private Integer id;
-    private Integer iid;
-    private Integer projectId;
+    private String id;
+    private String iid;
     private String title;
     private String description;
     private String state;
@@ -23,10 +22,9 @@ public class IssueFinal {
     private User asignee;
     private List<Comment> commentList;
 
-    public IssueFinal(Integer id, Integer iid, Integer projectId, String title, String description, String state, String createdAt, String updatedAt, Object closedAt, List<String> labels, Integer upvotes, Integer downvotes, User author, User asignee, List<Comment> commentList) {
+    public IssueFinal(String id, String iid, String title, String description, String state, String createdAt, String updatedAt, Object closedAt, List<String> labels, Integer upvotes, Integer downvotes, User author, User asignee, List<Comment> commentList) {
         this.id = id;
         this.iid = iid;
-        this.projectId = projectId;
         this.title = title;
         this.description = description;
         this.state = state;
@@ -41,28 +39,20 @@ public class IssueFinal {
         this.commentList = commentList;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Integer getIid() {
+    public String getIid() {
         return iid;
     }
 
-    public void setIid(Integer iid) {
+    public void setIid(String iid) {
         this.iid = iid;
-    }
-
-    public Integer getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(Integer projectId) {
-        this.projectId = projectId;
     }
 
     public String getTitle() {

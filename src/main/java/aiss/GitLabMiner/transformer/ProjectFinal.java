@@ -8,7 +8,7 @@ import aiss.GitLabMiner.model.Project;
 import java.util.List;
 
 public class ProjectFinal {
-    private Integer id;
+    private String id;
 
     private String name;
 
@@ -19,13 +19,13 @@ public class ProjectFinal {
     private List<IssueFinal> issueList;
 
     public ProjectFinal(Project project, List<Commit> commitList, List<IssueFinal> issueList) {
-        this.id = project.getId();
+        this.id = project.getId().toString();
         this.name = project.getName();
         this.webUrl = project.getWebUrl();
         this.commitList = commitList;
         this.issueList = issueList;
     }
-    public ProjectFinal(Integer id, String name, String webUrl, List<Commit> commitList, List<IssueFinal> issueList) {
+    public ProjectFinal(String id, String name, String webUrl, List<Commit> commitList, List<IssueFinal> issueList) {
         this.id = id;
         this.name = name;
         this.webUrl = webUrl;
@@ -33,11 +33,11 @@ public class ProjectFinal {
         this.issueList = issueList;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

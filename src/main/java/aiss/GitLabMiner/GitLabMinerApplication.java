@@ -11,7 +11,6 @@ public class GitLabMinerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(GitLabMinerApplication.class, args);
-		System.out.println("Hola mundo");
 	}
 	@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {return restTemplateBuilder.build();}
