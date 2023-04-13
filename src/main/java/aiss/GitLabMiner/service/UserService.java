@@ -1,5 +1,6 @@
 package aiss.GitLabMiner.service;
 
+import aiss.GitLabMiner.model.Project;
 import aiss.GitLabMiner.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -21,7 +22,7 @@ public class UserService {
     @Autowired
     RestTemplate restTemplate;
 
-    public List<User> getAllUsers(Integer maxPages, Integer sinceDays)
+    public List<User> getAllUsers(Integer sinceDays, Integer maxPages)
             throws HttpClientErrorException {
         String url = "https://gitlab.com/api/v4/users";
 
@@ -47,16 +48,18 @@ public class UserService {
         ResponseEntity<User[]> httpResponse = restTemplate.exchange(url, HttpMethod.GET, httpRequest, User[].class);
         HttpHeaders httpResponseHeaders = httpResponse.getHeaders();
 
-        String siguientePagina = utils.funciones.getNextPageUrl(httpResponseHeaders);
-        Integer page = 1;
         List<User> userList = new ArrayList<>();
+        userList.addAll(Arrays.asList(httpResponse.getBody()));
+
+        String siguientePagina = utils.funciones.getNextPageUrl(httpResponseHeaders);
+        Integer page = 2;
+
         while (siguientePagina != null && (maxPages != null && page < maxPages)) { //hay que comprobar que maxPages es diferente de null para poder evaluar <, funciona gracias a la evaluacion perezosa
             ResponseEntity<User[]> responseEntity = restTemplate.exchange(url + "?page=" + String.valueOf(page), HttpMethod.GET, httpRequest, User[].class);
             userList.addAll(Arrays.asList(responseEntity.getBody()));
             siguientePagina = utils.funciones.getNextPageUrl(responseEntity.getHeaders());
             page++;
         }
-        System.out.println(userList.size());
         return userList;
     }
 

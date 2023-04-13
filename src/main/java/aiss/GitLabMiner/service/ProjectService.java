@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +22,7 @@ public class ProjectService {
     @Autowired
     RestTemplate restTemplate;
 
-    public List<Project> getAllProjects(Integer maxPages, Integer sinceDays)
+    public List<Project> getAllProjects(Integer sinceDays,Integer maxPages)
             throws HttpClientErrorException {
         String url = "https://gitlab.com/api/v4/projects";
 
@@ -35,7 +36,7 @@ public class ProjectService {
                 LocalDateTime since = LocalDateTime.now().minusDays(sinceDays);
                 url.concat("?since=" + since);
             }
-            else {
+            else if (maxPages != null){
                 url.concat("?maxPages=" + maxPages);
             }
         }
@@ -47,16 +48,18 @@ public class ProjectService {
         ResponseEntity<Project[]> httpResponse = restTemplate.exchange(url, HttpMethod.GET, httpRequest, Project[].class);
         HttpHeaders httpResponseHeaders = httpResponse.getHeaders();
 
-        String siguientePagina = utils.funciones.getNextPageUrl(httpResponseHeaders);
-        Integer page = 1;
         List<Project> projectList = new ArrayList<>();
-        while (siguientePagina != null && (maxPages != null && page < maxPages)) { //hay que comprobar que maxPages es diferente de null para poder evaluar <, funciona gracias a la evaluacion perezosa
+        projectList.addAll(Arrays.asList(httpResponse.getBody()));
+
+        String siguientePagina = utils.funciones.getNextPageUrl(httpResponseHeaders);
+        Integer page = 2;
+
+        while (siguientePagina != null && (maxPages == null ? true:false || page < maxPages)) { //compruebo que maxPages sea distinto de null para poder avanzar
             ResponseEntity<Project[]> responseEntity = restTemplate.exchange(url + "?page=" + String.valueOf(page), HttpMethod.GET, httpRequest, Project[].class);
             projectList.addAll(Arrays.asList(responseEntity.getBody()));
             siguientePagina = utils.funciones.getNextPageUrl(responseEntity.getHeaders());
             page++;
         }
-        System.out.println(projectList.size());
         return projectList;
     }
 

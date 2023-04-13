@@ -1,6 +1,7 @@
 package aiss.GitLabMiner.service;
 
 import aiss.GitLabMiner.model.Commit;
+import aiss.GitLabMiner.model.Issue;
 import aiss.GitLabMiner.model.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class CommitService {
                 LocalDateTime since = LocalDateTime.now().minusDays(sinceDays);
                 url.concat("?since=" + since);
             }
-            else {
+            else if (maxPages != null){
                 url.concat("?maxPages=" + maxPages);
             }
         }
@@ -48,16 +49,19 @@ public class CommitService {
         ResponseEntity<Commit[]> httpResponse = restTemplate.exchange(url, HttpMethod.GET, httpRequest, Commit[].class);
         HttpHeaders httpResponseHeaders = httpResponse.getHeaders();
 
+        List<Commit> commitList= new ArrayList<>();
+        commitList.addAll(Arrays.asList(httpResponse.getBody()));
+
         String siguientePagina = utils.funciones.getNextPageUrl(httpResponseHeaders);
-        Integer page = 1;
-        List<Commit> commitList = new ArrayList<>();
-        while (siguientePagina != null && (maxPages != null && page < maxPages)) {//hay que comprobar que maxPages es diferente de null para poder evaluar <, funciona gracias a la evaluacion perezosa
+        Integer page = 2;
+
+
+        while (siguientePagina != null && (maxPages != null ?false:true && page < maxPages)) { //compruebo que maxPages sea distinto de null para poder avanzar
             ResponseEntity<Commit[]> responseEntity = restTemplate.exchange(url + "?page=" + String.valueOf(page), HttpMethod.GET, httpRequest, Commit[].class);
             commitList.addAll(Arrays.asList(responseEntity.getBody()));
             siguientePagina = utils.funciones.getNextPageUrl(responseEntity.getHeaders());
             page++;
         }
-        System.out.println(commitList.size());
         return commitList;
     }
 }

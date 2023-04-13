@@ -30,13 +30,13 @@ public class IssueService {
         // y en funcion de si existe uno o ambos añadir la ? en la posicion correspondiente
         if (sinceDays != null && maxPages != null) {
             LocalDateTime since = LocalDateTime.now().minusDays(sinceDays);
-            url.concat("?since=" + since + "&" + "maxPages=" + maxPages);
+            url.concat("?created_after=" + since + "&" + "maxPages=" + maxPages);
         } else {
             if (sinceDays != null) {
                 LocalDateTime since = LocalDateTime.now().minusDays(sinceDays);
-                url.concat("?since=" + since);
+                url.concat("?created_after=" + since);
             }
-            else {
+            else if (maxPages != null){
                 url.concat("?maxPages=" + maxPages);
             }
         }
@@ -48,16 +48,18 @@ public class IssueService {
         ResponseEntity<Issue[]> httpResponse = restTemplate.exchange(url, HttpMethod.GET, httpRequest, Issue[].class);
         HttpHeaders httpResponseHeaders = httpResponse.getHeaders();
 
-        String siguientePagina = utils.funciones.getNextPageUrl(httpResponseHeaders);
-        Integer page = 1;
         List<Issue> issueList = new ArrayList<>();
-        while (siguientePagina != null && (maxPages != null && page < maxPages)) {//hay que comprobar que maxPages es diferente de null para poder evaluar <, funciona gracias a la evaluacion perezosa
+        issueList.addAll(Arrays.asList(httpResponse.getBody()));
+
+        String siguientePagina = utils.funciones.getNextPageUrl(httpResponseHeaders);
+        Integer page = 2;
+
+        while (siguientePagina != null && (maxPages == null ? true:false || page < maxPages)) { //compruebo que maxPages sea distinto de null para poder avanzar
             ResponseEntity<Issue[]> responseEntity = restTemplate.exchange(url + "?page=" + String.valueOf(page), HttpMethod.GET, httpRequest, Issue[].class);
             issueList.addAll(Arrays.asList(responseEntity.getBody()));
             siguientePagina = utils.funciones.getNextPageUrl(responseEntity.getHeaders());
             page++;
         }
-        System.out.println(issueList.size());
         return issueList;
     }
 }
