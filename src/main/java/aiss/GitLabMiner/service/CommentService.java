@@ -22,7 +22,7 @@ public class CommentService {
     @Autowired
     RestTemplate restTemplate;
 
-    public List<Comment> getCommentsFromId(Integer id, Integer iId, Integer maxPages, Integer sinceDays)
+    public List<Comment> getCommentsFromId(Integer id, Integer iId, Integer sinceDays, Integer maxPages)
     throws HttpClientErrorException{
         String url="https://gitlab.com/api/v4/projects/"+id.toString()+"/issues/"+iId.toString()+"/notes";
 
