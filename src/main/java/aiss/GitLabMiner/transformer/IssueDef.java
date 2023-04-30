@@ -9,8 +9,8 @@ import java.util.List;
 
 public class IssueDef {
 
-    private Integer id;
-    private Integer ref_id;
+    private String id;
+    private String ref_id;
     private String title;
     private String description;
     private String state;
@@ -30,10 +30,11 @@ public class IssueDef {
     public static IssueDef ofRaw(Issue issueRaw, CommentService commentService, Integer sinceDays, Integer maxPages){
         return new IssueDef(issueRaw.getId(), issueRaw.getRef_id(), issueRaw.getTitle(), issueRaw.getDescription(),
                 issueRaw.getState(), issueRaw.getCreatedAt(), issueRaw.getUpdatedAt(), issueRaw.getClosedAt(), issueRaw.getLabels(),
-                issueRaw.getUpvotes(), issueRaw.getDownvotes(), issueRaw.getAuthor(), issueRaw.getAsignee(), commentService.getCommentsFromId(issueRaw.getId(), issueRaw.getRef_id(), sinceDays, maxPages));
+                issueRaw.getUpvotes(), issueRaw.getDownvotes(), issueRaw.getAuthor(), issueRaw.getAsignee(),
+                commentService.getCommentsFromId(Integer.valueOf(issueRaw.getProject_id()), Integer.valueOf(issueRaw.getRef_id()), sinceDays, maxPages));
     }
 
-    public IssueDef(Integer id, Integer ref_id, String title, String description, String state, String createdAt, String updatedAt, Object closedAt, List<String> labels, Integer upvotes, Integer downvotes, User author, User asignee, List<Comment> listComments) {
+    public IssueDef(String id, String ref_id, String title, String description, String state, String createdAt, String updatedAt, Object closedAt, List<String> labels, Integer upvotes, Integer downvotes, User author, User asignee, List<Comment> listComments) {
         this.id = id;
         this.ref_id = ref_id;
         this.title = title;
@@ -50,19 +51,19 @@ public class IssueDef {
         this.listComments = listComments;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Integer getRef_id() {
+    public String getRef_id() {
         return ref_id;
     }
 
-    public void setRef_id(Integer ref_id) {
+    public void setRef_id(String ref_id) {
         this.ref_id = ref_id;
     }
 
@@ -160,5 +161,25 @@ public class IssueDef {
 
     public void setListComments(List<Comment> listComments) {
         this.listComments = listComments;
+    }
+
+    @Override
+    public String toString() {
+        return "IssueDef{" +
+                "id='" + id + '\'' +
+                ", ref_id='" + ref_id + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", state='" + state + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", closedAt=" + closedAt +
+                ", labels=" + labels +
+                ", upvotes=" + upvotes +
+                ", downvotes=" + downvotes +
+                ", author=" + author +
+                ", asignee=" + asignee +
+                ", listComments=" + listComments +
+                '}';
     }
 }

@@ -55,9 +55,11 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class Issue {
 
     @JsonProperty("id")
-    private Integer id;
+    private String id;
+    @JsonProperty("iid")
+    private String ref_id;
     @JsonProperty("project_id")
-    private Integer ref_id;
+    private String project_id;
     @JsonProperty("title")
     private String title;
     @JsonProperty("description")
@@ -83,23 +85,32 @@ public class Issue {
     @JsonProperty("asignee")
     private User asignee;
 
+
+    public String getProject_id() {
+        return project_id;
+    }
+
+    public void setProject_id(String project_id) {
+        this.project_id = project_id;
+    }
+
     @JsonProperty("id")
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
     @JsonProperty("id")
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     @JsonProperty("iid")
-    public Integer getRef_id() {
+    public String getRef_id() {
         return ref_id;
     }
 
     @JsonProperty("iid")
-    public void setRef_id(Integer ref_id) {
+    public void setRef_id(String ref_id) {
         this.ref_id = ref_id;
     }
 
