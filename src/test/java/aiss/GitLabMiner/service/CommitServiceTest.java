@@ -16,7 +16,7 @@ class CommitServiceTest {
     @Test
     @DisplayName("Test de getAllCommits")
     void getAllCommits() {
-        List<Commit> commitList = commitService.getAllCommits(44773587, 50, 6);
+        List<Commit> commitList = commitService.getAllCommits(45607252, 50, 6);
         System.out.println(commitList);
     }
 

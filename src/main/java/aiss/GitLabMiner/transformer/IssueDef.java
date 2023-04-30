@@ -1,14 +1,16 @@
 package aiss.GitLabMiner.transformer;
 
 import aiss.GitLabMiner.model.Comment;
+import aiss.GitLabMiner.model.Issue;
 import aiss.GitLabMiner.model.User;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import aiss.GitLabMiner.service.CommentService;
 
 import java.util.List;
 
-public class IssueFinal {
-    private String id;
-    private String iid;
+public class IssueDef {
+
+    private Integer id;
+    private Integer ref_id;
     private String title;
     private String description;
     private String state;
@@ -20,11 +22,20 @@ public class IssueFinal {
     private Integer downvotes;
     private User author;
     private User asignee;
-    private List<Comment> commentList;
 
-    public IssueFinal(String id, String iid, String title, String description, String state, String createdAt, String updatedAt, Object closedAt, List<String> labels, Integer upvotes, Integer downvotes, User author, User asignee, List<Comment> commentList) {
+    private List<Comment> listComments;
+
+
+    //metodo que usaremos para unir a nuestro Issue la lista de Comments que obtenemos con getCommentsFromId. Luego se hará una lista de IssueDef que será una propiedad de ProjectDef
+    public static IssueDef ofRaw(Issue issueRaw, CommentService commentService, Integer sinceDays, Integer maxPages){
+        return new IssueDef(issueRaw.getId(), issueRaw.getRef_id(), issueRaw.getTitle(), issueRaw.getDescription(),
+                issueRaw.getState(), issueRaw.getCreatedAt(), issueRaw.getUpdatedAt(), issueRaw.getClosedAt(), issueRaw.getLabels(),
+                issueRaw.getUpvotes(), issueRaw.getDownvotes(), issueRaw.getAuthor(), issueRaw.getAsignee(), commentService.getCommentsFromId(issueRaw.getId(), issueRaw.getRef_id(), sinceDays, maxPages));
+    }
+
+    public IssueDef(Integer id, Integer ref_id, String title, String description, String state, String createdAt, String updatedAt, Object closedAt, List<String> labels, Integer upvotes, Integer downvotes, User author, User asignee, List<Comment> listComments) {
         this.id = id;
-        this.iid = iid;
+        this.ref_id = ref_id;
         this.title = title;
         this.description = description;
         this.state = state;
@@ -36,23 +47,23 @@ public class IssueFinal {
         this.downvotes = downvotes;
         this.author = author;
         this.asignee = asignee;
-        this.commentList = commentList;
+        this.listComments = listComments;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getIid() {
-        return iid;
+    public Integer getRef_id() {
+        return ref_id;
     }
 
-    public void setIid(String iid) {
-        this.iid = iid;
+    public void setRef_id(Integer ref_id) {
+        this.ref_id = ref_id;
     }
 
     public String getTitle() {
@@ -143,11 +154,11 @@ public class IssueFinal {
         this.asignee = asignee;
     }
 
-    public List<Comment> getCommentList() {
-        return commentList;
+    public List<Comment> getListComments() {
+        return listComments;
     }
 
-    public void setCommentList(List<Comment> commentList) {
-        this.commentList = commentList;
+    public void setListComments(List<Comment> listComments) {
+        this.listComments = listComments;
     }
 }

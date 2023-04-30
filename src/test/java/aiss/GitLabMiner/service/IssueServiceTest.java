@@ -2,6 +2,7 @@ package aiss.GitLabMiner.service;
 
 import aiss.GitLabMiner.model.Commit;
 import aiss.GitLabMiner.model.Issue;
+import aiss.GitLabMiner.transformer.IssueDef;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ class IssueServiceTest {
     @Test
     @DisplayName("Test de getAllIssues")
     void getAllIssues() {
-        List<Issue> issueList = issueService.getAllIssues(179611, 1,2);
+        List<IssueDef> issueList = issueService.getAllIssues(179611, 1,2);
         System.out.println(issueList);
     }
 }

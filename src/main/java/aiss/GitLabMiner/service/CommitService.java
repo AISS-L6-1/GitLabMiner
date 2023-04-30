@@ -26,7 +26,6 @@ public class CommitService {
     public List<Commit> getAllCommits(Integer id, Integer sinceDays, Integer maxPages)
             throws HttpClientErrorException {// sinceDays() maxPages  y throws HttpClientErrorException
 
-
         String url = "https://gitlab.com/api/v4/projects/" + id.toString() + "/repository/commits";
         //como queremos que nuestros parametros(sinceDays y maxPages) sean opcionales, debemos comprobar cual de ellos no es nulo
         // y en funcion de si existe uno o ambos añadir la ? en la posicion correspondiente
@@ -62,6 +61,7 @@ public class CommitService {
             siguientePagina = utils.funciones.getNextPageUrl(responseEntity.getHeaders());
             page++;
         }
+
         return commitList;
     }
 }

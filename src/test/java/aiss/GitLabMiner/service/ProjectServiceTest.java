@@ -1,6 +1,7 @@
 package aiss.GitLabMiner.service;
 
 import aiss.GitLabMiner.model.Project;
+import aiss.GitLabMiner.transformer.ProjectDef;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +15,15 @@ class ProjectServiceTest {
     @Test
     @DisplayName("Test de getAllProjects")
     void getAllProjects() {
-        List<Project> projectList = projectService.getAllProjects(2,2);
+        List<ProjectDef> projectList = projectService.getAllProjects(2,10,10,5);
         System.out.println(projectList);
     }
 
     @Test
     @DisplayName("Test de getProjectFromId")
     void getProjectFromId() {
-        Integer id = 44773587; // está en las primeras 20 pags
-        Project project = projectService.getProjectFromId(id);
+        Integer id = 4207231; // está en las primeras 20 pags
+        ProjectDef project = projectService.getProjectFromId(id, 10, 10, 5);
         System.out.println(project);
     }
 }

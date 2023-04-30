@@ -56,10 +56,8 @@ public class Issue {
 
     @JsonProperty("id")
     private Integer id;
-    @JsonProperty("iid")
-    private Integer iid;
     @JsonProperty("project_id")
-    private Integer projectId;
+    private Integer ref_id;
     @JsonProperty("title")
     private String title;
     @JsonProperty("description")
@@ -96,23 +94,13 @@ public class Issue {
     }
 
     @JsonProperty("iid")
-    public Integer getIid() {
-        return iid;
+    public Integer getRef_id() {
+        return ref_id;
     }
 
     @JsonProperty("iid")
-    public void setIid(Integer iid) {
-        this.iid = iid;
-    }
-
-    @JsonProperty("project_id")
-    public Integer getProjectId() {
-        return projectId;
-    }
-
-    @JsonProperty("project_id")
-    public void setProjectId(Integer projectId) {
-        this.projectId = projectId;
+    public void setRef_id(Integer ref_id) {
+        this.ref_id = ref_id;
     }
 
     @JsonProperty("title")
@@ -230,8 +218,7 @@ public class Issue {
     public String toString() {
         return "Issue{" +
                 "id=" + id +
-                ", iid=" + iid +
-                ", projectId=" + projectId +
+                ", iid=" + ref_id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", state='" + state + '\'' +
@@ -251,11 +238,11 @@ public class Issue {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Issue issue = (Issue) o;
-        return Objects.equals(id, issue.id) && Objects.equals(iid, issue.iid) && Objects.equals(projectId, issue.projectId) && Objects.equals(title, issue.title) && Objects.equals(description, issue.description) && Objects.equals(state, issue.state) && Objects.equals(createdAt, issue.createdAt) && Objects.equals(updatedAt, issue.updatedAt) && Objects.equals(closedAt, issue.closedAt) && Objects.equals(labels, issue.labels) && Objects.equals(upvotes, issue.upvotes) && Objects.equals(downvotes, issue.downvotes) && Objects.equals(author, issue.author) && Objects.equals(asignee, issue.asignee);
+        return Objects.equals(id, issue.id) && Objects.equals(ref_id, issue.ref_id) && Objects.equals(title, issue.title) && Objects.equals(description, issue.description) && Objects.equals(state, issue.state) && Objects.equals(createdAt, issue.createdAt) && Objects.equals(updatedAt, issue.updatedAt) && Objects.equals(closedAt, issue.closedAt) && Objects.equals(labels, issue.labels) && Objects.equals(upvotes, issue.upvotes) && Objects.equals(downvotes, issue.downvotes) && Objects.equals(author, issue.author) && Objects.equals(asignee, issue.asignee);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, iid, projectId, title, description, state, createdAt, updatedAt, closedAt, labels, upvotes, downvotes, author, asignee);
+        return Objects.hash(id, ref_id, title, description, state, createdAt, updatedAt, closedAt, labels, upvotes, downvotes, author, asignee);
     }
 }

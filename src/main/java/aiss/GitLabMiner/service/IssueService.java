@@ -2,6 +2,7 @@ package aiss.GitLabMiner.service;
 
 
 import aiss.GitLabMiner.model.Issue;
+import aiss.GitLabMiner.transformer.IssueDef;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -21,8 +22,10 @@ import java.util.List;
 public class IssueService {
     @Autowired
     RestTemplate restTemplate;
+    @Autowired
+    CommentService commentService;
 
-    public List<Issue> getAllIssues(Integer id, Integer sinceDays, Integer maxPages)
+    public List<IssueDef> getAllIssues(Integer id, Integer sinceDays, Integer maxPages)
             throws HttpClientErrorException {
 
         String url = "https://gitlab.com/api/v4/projects/" + id.toString() + "/issues";
@@ -60,6 +63,7 @@ public class IssueService {
             siguientePagina = utils.funciones.getNextPageUrl(responseEntity.getHeaders());
             page++;
         }
-        return issueList;
+        List<IssueDef> issueDefList = issueList.stream().map(i -> IssueDef.ofRaw(i,commentService, sinceDays, maxPages)).toList();
+        return issueDefList;
     }
 }

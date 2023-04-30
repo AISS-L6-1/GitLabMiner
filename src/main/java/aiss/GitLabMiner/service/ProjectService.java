@@ -1,6 +1,7 @@
 package aiss.GitLabMiner.service;
 
 import aiss.GitLabMiner.model.Project;
+import aiss.GitLabMiner.transformer.ProjectDef;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -21,8 +22,12 @@ import java.util.List;
 public class ProjectService {
     @Autowired
     RestTemplate restTemplate;
+    @Autowired
+    CommitService commitService;
+    @Autowired
+    IssueService issueService;
 
-    public List<Project> getAllProjects(Integer sinceDays,Integer maxPages)
+    public List<ProjectDef> getAllProjects(Integer sinceDays, Integer sinceIssues, Integer sinceCommits, Integer maxPages)
             throws HttpClientErrorException {
         String url = "https://gitlab.com/api/v4/projects";
 
@@ -60,16 +65,19 @@ public class ProjectService {
             siguientePagina = utils.funciones.getNextPageUrl(responseEntity.getHeaders());
             page++;
         }
-        return projectList;
+        List<ProjectDef> projectDefList = projectList.stream().map(p -> ProjectDef.ofRaw(p,commitService,issueService,sinceIssues, sinceCommits,  maxPages)).toList();
+        return projectDefList;
     }
 
-    public Project getProjectFromId(Integer id) {
+    public ProjectDef getProjectFromId(Integer id, Integer sinceIssues, Integer sinceCommits ,Integer maxPages) {
+
         String url = "https://gitlab.com/api/v4/projects" + "/" + id.toString();
         String token = "glpat-yzJhzxFSm4fasdqqwCKD";
         HttpHeaders httpHeadersRequest = new HttpHeaders();
         httpHeadersRequest.setBearerAuth(token);
         HttpEntity<Project> httpRequest = new HttpEntity<>(null, httpHeadersRequest);
         ResponseEntity<Project> httpResponse = restTemplate.exchange(url, HttpMethod.GET, httpRequest, Project.class);
-        return httpResponse.getBody();
+        Project p = httpResponse.getBody();
+        return ProjectDef.ofRaw(p,commitService,issueService, sinceIssues, sinceCommits, maxPages);
     }
 }
