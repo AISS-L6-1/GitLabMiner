@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import utils.funciones;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -29,15 +30,18 @@ public class IssueService {
             throws HttpClientErrorException {
 
         String url = "https://gitlab.com/api/v4/projects/" + id.toString() + "/issues";
+
+        String parsedSince = funciones.dateNDaysBefore(sinceDays);
+
         //como queremos que nuestros parametros(sinceDays y maxPages) sean opcionales, debemos comprobar cual de ellos no es nulo
         // y en funcion de si existe uno o ambos añadir la ? en la posicion correspondiente
         if (sinceDays != null && maxPages != null) {
             LocalDateTime since = LocalDateTime.now().minusDays(sinceDays);
-            url.concat("?created_after=" + since + "&" + "maxPages=" + maxPages);
+            url.concat("?created_after=" + parsedSince + "&" + "maxPages=" + maxPages);
         } else {
             if (sinceDays != null) {
                 LocalDateTime since = LocalDateTime.now().minusDays(sinceDays);
-                url.concat("?created_after=" + since);
+                url.concat("?created_after=" + parsedSince);
             }
             else if (maxPages != null){
                 url.concat("?maxPages=" + maxPages);

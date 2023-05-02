@@ -6,8 +6,10 @@ import org.springframework.http.HttpHeaders;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class funciones {
 
@@ -36,6 +38,11 @@ public class funciones {
         }
 
         return result;
+    }
+
+    public static String dateNDaysBefore(Integer n){
+        LocalDateTime ahora = LocalDateTime.now();
+        return ahora.minusDays(n).toString();
     }
 
 
