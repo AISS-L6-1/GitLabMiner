@@ -27,20 +27,18 @@ public class CommentService {
     throws HttpClientErrorException{
         String url="https://gitlab.com/api/v4/projects/"+id.toString()+"/issues/"+iId.toString()+"/notes";
 
-        String parsedSince = funciones.dateNDaysBefore(sinceDays);
-
         //como queremos que nuestros parametros(sinceDays y maxPages) sean opcionales, debemos comprobar cual de ellos no es nulo
         // y en funcion de si existe uno o ambos añadir la ? en la posicion correspondiente
         if (sinceDays != null && maxPages != null) {
             LocalDateTime since = LocalDateTime.now().minusDays(sinceDays);
-            url.concat("?created_after=" + parsedSince + "&" + "maxPages=" + maxPages);
+            url = url.concat("?created_after=" + since + "&" + "maxPages=" + maxPages);
         } else {
             if (sinceDays != null) {
                 LocalDateTime since = LocalDateTime.now().minusDays(sinceDays);
-                url.concat("?created_after=" + parsedSince);
+                url = url.concat("?created_after=" + since);
             }
             else if (maxPages != null){
-                url.concat("?maxPages=" + maxPages);
+                url = url.concat("?maxPages=" + maxPages);
             }
         }
 
