@@ -82,7 +82,7 @@ public class Issue {
     @JsonProperty("author")
     private User author;
 
-    @JsonProperty("asignee")
+    @JsonProperty("assignee")
     private User assignee;
 
 
@@ -240,7 +240,7 @@ public class Issue {
                 ", upvotes=" + upvotes +
                 ", downvotes=" + downvotes +
                 ", author=" + author +
-                ", asignee=" + assignee +
+                ", assignee=" + assignee +
                 '}';
     }
 
