@@ -21,7 +21,7 @@ public class IssueDef {
     private Integer upvotes;
     private Integer downvotes;
     private User author;
-    private User asignee;
+    private User assignee;
 
     private List<Comment> listComments;
 
@@ -30,11 +30,11 @@ public class IssueDef {
     public static IssueDef ofRaw(Issue issueRaw, CommentService commentService, Integer sinceDays, Integer maxPages){
         return new IssueDef(issueRaw.getId(), issueRaw.getRef_id(), issueRaw.getTitle(), issueRaw.getDescription(),
                 issueRaw.getState(), issueRaw.getCreatedAt(), issueRaw.getUpdatedAt(), issueRaw.getClosedAt(), issueRaw.getLabels(),
-                issueRaw.getUpvotes(), issueRaw.getDownvotes(), issueRaw.getAuthor(), issueRaw.getAsignee(),
+                issueRaw.getUpvotes(), issueRaw.getDownvotes(), issueRaw.getAuthor(), issueRaw.getAssignee(),
                 commentService.getCommentsFromId(Integer.valueOf(issueRaw.getProject_id()), Integer.valueOf(issueRaw.getRef_id()), sinceDays, maxPages));
     }
 
-    public IssueDef(String id, String ref_id, String title, String description, String state, String createdAt, String updatedAt, Object closedAt, List<String> labels, Integer upvotes, Integer downvotes, User author, User asignee, List<Comment> listComments) {
+    public IssueDef(String id, String ref_id, String title, String description, String state, String createdAt, String updatedAt, Object closedAt, List<String> labels, Integer upvotes, Integer downvotes, User author, User assignee, List<Comment> listComments) {
         this.id = id;
         this.ref_id = ref_id;
         this.title = title;
@@ -47,7 +47,7 @@ public class IssueDef {
         this.upvotes = upvotes;
         this.downvotes = downvotes;
         this.author = author;
-        this.asignee = asignee;
+        this.assignee = assignee;
         this.listComments = listComments;
     }
 
@@ -147,12 +147,12 @@ public class IssueDef {
         this.author = author;
     }
 
-    public User getAsignee() {
-        return asignee;
+    public User getAssignee() {
+        return assignee;
     }
 
-    public void setAsignee(User asignee) {
-        this.asignee = asignee;
+    public void setAssignee(User assignee) {
+        this.assignee = assignee;
     }
 
     public List<Comment> getListComments() {
@@ -178,7 +178,7 @@ public class IssueDef {
                 ", upvotes=" + upvotes +
                 ", downvotes=" + downvotes +
                 ", author=" + author +
-                ", asignee=" + asignee +
+                ", assignee=" + assignee +
                 ", listComments=" + listComments +
                 '}';
     }

@@ -83,7 +83,7 @@ public class Issue {
     private User author;
 
     @JsonProperty("asignee")
-    private User asignee;
+    private User assignee;
 
 
     public String getProject_id() {
@@ -214,15 +214,15 @@ public class Issue {
         this.author = author;
     }
 
-    @JsonProperty("asignee")
+    @JsonProperty("assignee")
 
-    public User getAsignee() {
-        return asignee;
+    public User getAssignee() {
+        return assignee;
     }
 
     @JsonProperty("asignee")
-    public void setAsignee(User asignee) {
-        this.asignee = asignee;
+    public void setAssignee(User assignee) {
+        this.assignee = assignee;
     }
 
     @Override
@@ -240,7 +240,7 @@ public class Issue {
                 ", upvotes=" + upvotes +
                 ", downvotes=" + downvotes +
                 ", author=" + author +
-                ", asignee=" + asignee +
+                ", asignee=" + assignee +
                 '}';
     }
 
@@ -249,11 +249,11 @@ public class Issue {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Issue issue = (Issue) o;
-        return Objects.equals(id, issue.id) && Objects.equals(ref_id, issue.ref_id) && Objects.equals(title, issue.title) && Objects.equals(description, issue.description) && Objects.equals(state, issue.state) && Objects.equals(createdAt, issue.createdAt) && Objects.equals(updatedAt, issue.updatedAt) && Objects.equals(closedAt, issue.closedAt) && Objects.equals(labels, issue.labels) && Objects.equals(upvotes, issue.upvotes) && Objects.equals(downvotes, issue.downvotes) && Objects.equals(author, issue.author) && Objects.equals(asignee, issue.asignee);
+        return Objects.equals(id, issue.id) && Objects.equals(ref_id, issue.ref_id) && Objects.equals(title, issue.title) && Objects.equals(description, issue.description) && Objects.equals(state, issue.state) && Objects.equals(createdAt, issue.createdAt) && Objects.equals(updatedAt, issue.updatedAt) && Objects.equals(closedAt, issue.closedAt) && Objects.equals(labels, issue.labels) && Objects.equals(upvotes, issue.upvotes) && Objects.equals(downvotes, issue.downvotes) && Objects.equals(author, issue.author) && Objects.equals(assignee, issue.assignee);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, ref_id, title, description, state, createdAt, updatedAt, closedAt, labels, upvotes, downvotes, author, asignee);
+        return Objects.hash(id, ref_id, title, description, state, createdAt, updatedAt, closedAt, labels, upvotes, downvotes, author, assignee);
     }
 }
