@@ -81,4 +81,16 @@ public class ProjectService {
         Project p = httpResponse.getBody();
         return ProjectDef.ofRaw(p,commitService,issueService, sinceIssues, sinceCommits, maxPages);
     }
+
+    public void postProjectFromId(Integer id, Integer sinceIssues, Integer sinceCommits ,Integer maxPages){
+
+        String url = "https://localhost:8080/api/projects" + "/" + id.toString();
+
+        HttpHeaders httpHeadersRequest = new HttpHeaders();
+        HttpEntity<ProjectDef> httpRequest = new HttpEntity<>(null, httpHeadersRequest);
+
+        ProjectDef proyecto = getProjectFromId(id,sinceIssues,sinceCommits,maxPages);
+
+        ResponseEntity<ProjectDef> httpResponse = restTemplate.postForEntity(url, proyecto, ProjectDef.class);
+    }
 }

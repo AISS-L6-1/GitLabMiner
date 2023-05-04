@@ -4,6 +4,11 @@ package aiss.GitLabMiner.model;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.annotation.Generated;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,11 +26,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "web_url"
 })
 @Generated("jsonschema2pojo")
+@Entity
+@Table(name = "GMUser")
 public class User {
-
+    @Id
     @JsonProperty("id")
     private Integer id;
     @JsonProperty("username")
+    @NotEmpty(message = "The username cannot be empty")
     private String username;
     @JsonProperty("name")
     private String name;
@@ -118,6 +126,7 @@ public class User {
         return (((((this.avatarUrl == rhs.avatarUrl)||((this.avatarUrl!= null)&&this.avatarUrl.equals(rhs.avatarUrl)))&&((this.webUrl == rhs.webUrl)||((this.webUrl!= null)&&this.webUrl.equals(rhs.webUrl))))&&((this.name == rhs.name)||((this.name!= null)&&this.name.equals(rhs.name))))&&((this.id == rhs.id)||((this.id!= null)&&this.id.equals(rhs.id)))&&((this.username == rhs.username)||((this.username!= null)&&this.username.equals(rhs.username))));
     }
 
+    public User(){}
     public User(Integer id, String username, String name, String avatarUrl, String webUrl, Map<String, Object> additionalProperties) {
         this.id = id;
         this.username = username;

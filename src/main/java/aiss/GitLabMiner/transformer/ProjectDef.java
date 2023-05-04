@@ -1,21 +1,26 @@
 package aiss.GitLabMiner.transformer;
 
 import aiss.GitLabMiner.model.Commit;
-import aiss.GitLabMiner.model.Issue;
 import aiss.GitLabMiner.model.Project;
 import aiss.GitLabMiner.service.CommitService;
 import aiss.GitLabMiner.service.IssueService;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
+
 
 public class ProjectDef {
 
     private String id;
+
     private String name;
+
     private String web_url;
-    private List<Commit> listCommits;
-    private List<IssueDef> listIssue;
+
+    private List<Commit> commits;
+
+    private List<IssueDef> issues;
 
     //este metodo transforma un proyecto (modelo POJO) en el proyecto (modelo figura 2) al invocarlo se buscan todos los issues(que se transforman en IssueDef, ver getAllIssues) y todos los Comments del proyecto
     public static ProjectDef ofRaw(Project project, CommitService commitService, IssueService issueService, Integer sinceIssues, Integer sinceCommits, Integer maxPages){
@@ -24,12 +29,15 @@ public class ProjectDef {
                 issueService.getAllIssues(Integer.valueOf(project.getId()), sinceIssues, maxPages));
     }
 
+    public ProjectDef(){
+
+    }
     public ProjectDef(String id, String name, String web_url, List<Commit> listCommits, List<IssueDef> listIssue) {
         this.id = id;
         this.name = name;
         this.web_url = web_url;
-        this.listCommits = listCommits;
-        this.listIssue = listIssue;
+        this.commits = listCommits;
+        this.issues = listIssue;
     }
 
     public String getId() {
@@ -56,20 +64,20 @@ public class ProjectDef {
         this.web_url = web_url;
     }
 
-    public List<Commit> getListCommits() {
-        return listCommits;
+    public List<Commit> getCommits() {
+        return commits;
     }
 
-    public void setListCommits(List<Commit> listCommits) {
-        this.listCommits = listCommits;
+    public void setCommits(List<Commit> commits) {
+        this.commits = commits;
     }
 
-    public List<IssueDef> getListIssue() {
-        return listIssue;
+    public List<IssueDef> getIssues() {
+        return issues;
     }
 
-    public void setListIssue(List<IssueDef> listIssue) {
-        this.listIssue = listIssue;
+    public void setIssues(List<IssueDef> issues) {
+        this.issues = issues;
     }
 
     @Override
@@ -78,8 +86,8 @@ public class ProjectDef {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", web_url='" + web_url + '\'' +
-                ", listCommits=" + listCommits +
-                ", listIssue=" + listIssue +
+                ", listCommits=" + commits +
+                ", listIssue=" + issues +
                 '}';
     }
 }

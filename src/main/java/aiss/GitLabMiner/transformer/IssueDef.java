@@ -4,26 +4,42 @@ import aiss.GitLabMiner.model.Comment;
 import aiss.GitLabMiner.model.Issue;
 import aiss.GitLabMiner.model.User;
 import aiss.GitLabMiner.service.CommentService;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.*;
 import java.util.List;
+
 
 public class IssueDef {
 
+
+
     private String id;
     private String ref_id;
+
     private String title;
+
     private String description;
+
     private String state;
+
     private String createdAt;
+
     private String updatedAt;
-    private Object closedAt;
+
+    private String closedAt;
+
+
     private List<String> labels;
+
+
+    private User author;
+
+    private User assignee;
     private Integer upvotes;
     private Integer downvotes;
-    private User author;
-    private User assignee;
 
-    private List<Comment> listComments;
+    private List<Comment> comments;
 
 
     //metodo que usaremos para unir a nuestro Issue la lista de Comments que obtenemos con getCommentsFromId. Luego se hará una lista de IssueDef que será una propiedad de ProjectDef
@@ -34,7 +50,11 @@ public class IssueDef {
                 commentService.getCommentsFromId(Integer.valueOf(issueRaw.getProject_id()), Integer.valueOf(issueRaw.getRef_id()), sinceDays, maxPages));
     }
 
-    public IssueDef(String id, String ref_id, String title, String description, String state, String createdAt, String updatedAt, Object closedAt, List<String> labels, Integer upvotes, Integer downvotes, User author, User assignee, List<Comment> listComments) {
+    public IssueDef(){
+
+    }
+
+    public IssueDef(String id, String ref_id, String title, String description, String state, String createdAt, String updatedAt, String closedAt, List<String> labels, Integer upvotes, Integer downvotes, User author, User assignee, List<Comment> listComments) {
         this.id = id;
         this.ref_id = ref_id;
         this.title = title;
@@ -48,7 +68,7 @@ public class IssueDef {
         this.downvotes = downvotes;
         this.author = author;
         this.assignee = assignee;
-        this.listComments = listComments;
+        this.comments = listComments;
     }
 
     public String getId() {
@@ -107,11 +127,11 @@ public class IssueDef {
         this.updatedAt = updatedAt;
     }
 
-    public Object getClosedAt() {
+    public String getClosedAt() {
         return closedAt;
     }
 
-    public void setClosedAt(Object closedAt) {
+    public void setClosedAt(String closedAt) {
         this.closedAt = closedAt;
     }
 
@@ -155,12 +175,12 @@ public class IssueDef {
         this.assignee = assignee;
     }
 
-    public List<Comment> getListComments() {
-        return listComments;
+    public List<Comment> getComments() {
+        return comments;
     }
 
-    public void setListComments(List<Comment> listComments) {
-        this.listComments = listComments;
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     @Override
@@ -179,7 +199,7 @@ public class IssueDef {
                 ", downvotes=" + downvotes +
                 ", author=" + author +
                 ", assignee=" + assignee +
-                ", listComments=" + listComments +
+                ", listComments=" + comments +
                 '}';
     }
 }
