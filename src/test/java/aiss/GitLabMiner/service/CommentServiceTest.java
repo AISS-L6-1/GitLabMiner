@@ -10,6 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 @SpringBootTest
 class CommentServiceTest {
     @Autowired
@@ -18,6 +19,7 @@ class CommentServiceTest {
     @DisplayName("Test de getCommentsFromId")
     void getCommentsFromId() {
         List<Comment> commentList=commentService.getCommentsFromId(20699,7717,5,50);
+        assertFalse(commentList.isEmpty(), "The list of comments is empty");
         System.out.println(commentList);
     }
 

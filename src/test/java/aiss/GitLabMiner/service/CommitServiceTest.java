@@ -17,6 +17,7 @@ class CommitServiceTest {
     @DisplayName("Test de getAllCommits")
     void getAllCommits() {
         List<Commit> commitList = commitService.getAllCommits(4207231, 50, 6);
+        assertFalse(commitList.isEmpty(),"The list of commits is empty");
         System.out.println(commitList);
     }
 

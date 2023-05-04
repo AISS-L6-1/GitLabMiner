@@ -31,6 +31,7 @@ public class ProjectController {
     }
 
     //POST http://localhost:808X/api/projects/{id} // <-- este post lo tengo que redirigir a GHM o algo así?
+    // post a gitminer, postForEntity q llame desde GLM
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/{id}")
