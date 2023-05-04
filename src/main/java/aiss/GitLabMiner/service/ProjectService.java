@@ -84,7 +84,7 @@ public class ProjectService {
 
     public void postProjectFromId(Integer id, Integer sinceIssues, Integer sinceCommits ,Integer maxPages){
 
-        String url = "https://localhost:8080/api/projects" + "/" + id.toString();
+        String url = "http://localhost:8080/api/projects";
 
         HttpHeaders httpHeadersRequest = new HttpHeaders();
         HttpEntity<ProjectDef> httpRequest = new HttpEntity<>(null, httpHeadersRequest);

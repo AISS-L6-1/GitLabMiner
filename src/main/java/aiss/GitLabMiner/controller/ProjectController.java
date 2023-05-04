@@ -23,14 +23,14 @@ public class ProjectController {
 
     }
 
-    //GET http://localhost:8080/api/projects/{id}
+    //GET http://localhost:8081/api/projects/{id}
     @GetMapping("/{id}")
     public ProjectDef findOne(@PathVariable long id, @RequestParam("sinceIssues") Integer sinceIssues, @RequestParam("sinceCommits") Integer sinceCommits, @RequestParam("maxPages") Integer maxPages) {
         ProjectDef project = projectService.getProjectFromId((int) id, sinceIssues, sinceCommits, maxPages);
         return project;
     }
 
-    //POST http://localhost:808X/api/projects/{id} // <-- este post lo tengo que redirigir a GHM o algo así?
+    //POST http://localhost:8081/api/projects/{id} // <-- este post lo tengo que redirigir a GHM o algo así?
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/{id}")
