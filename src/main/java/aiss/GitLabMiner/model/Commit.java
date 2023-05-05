@@ -26,42 +26,31 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "web_url"
 })
 @Generated("jsonschema2pojo")
-@Entity
-@Table(name = "Commit")
 public class Commit {
     /*
     Propiedades que quiero -> [id, tittle, message, authorName, authorEmail, authoredDate,
     committerName, committerEmail, committedDate, webUrl]
      */
-    @Id
     @JsonProperty("id")
     private String id;
     @JsonProperty("title")
     private String title;
     @JsonProperty("message")
-    @Column(columnDefinition="TEXT")
     private String message;
     @JsonProperty("author_name")
-    @NotEmpty(message = "Author name cannot be empty.")
     private String authorName;
     @JsonProperty("author_email")
-    @NotEmpty(message = "Author date cannot be empty.")
     private String authorEmail;
     @JsonProperty("authored_date")
-    @NotEmpty(message = "Author date cannot be empty.")
     private String authoredDate;
     @JsonProperty("committer_name")
-    @NotEmpty(message = "Committer name cannot be empty.")
     private String committerName;
     @JsonProperty("committer_email")
     private String committerEmail;
     @JsonProperty("committed_date")
-    @NotEmpty(message = "Committer date cannot be empty.")
     private String committedDate;
 
     @JsonProperty("web_url")
-    @NotEmpty(message = "URL cannot be empty." +
-            "")
     private String webUrl;
 
     public Commit(){

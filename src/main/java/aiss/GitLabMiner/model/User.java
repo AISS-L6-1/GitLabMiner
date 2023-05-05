@@ -26,14 +26,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "web_url"
 })
 @Generated("jsonschema2pojo")
-@Entity
-@Table(name = "GMUser")
 public class User {
-    @Id
     @JsonProperty("id")
     private Integer id;
     @JsonProperty("username")
-    @NotEmpty(message = "The username cannot be empty")
     private String username;
     @JsonProperty("name")
     private String name;
