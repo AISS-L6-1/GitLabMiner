@@ -11,6 +11,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpHeaders;
+import utils.Token;
 import utils.funciones;
 
 import java.time.LocalDateTime;
@@ -44,7 +45,7 @@ public class CommitService {
             }
         }
 
-        String token = "glpat-yzJhzxFSm4fasdqqwCKD";
+        String token = Token.TOKEN;
         HttpHeaders httpHeadersRequest = new HttpHeaders();
         httpHeadersRequest.setBearerAuth(token);
         HttpEntity<Commit[]> httpRequest = new HttpEntity<>(null, httpHeadersRequest);

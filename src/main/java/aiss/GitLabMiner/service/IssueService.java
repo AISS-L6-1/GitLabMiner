@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import utils.Token;
 import utils.funciones;
 
 import java.time.LocalDateTime;
@@ -26,7 +27,7 @@ public class IssueService {
     @Autowired
     CommentService commentService;
 
-    public List<IssueDef> getAllIssues(Integer id, Integer sinceDays, Integer maxPages)
+    public List<Issue> getAllIssues(Integer id, Integer sinceDays, Integer maxPages)
             throws HttpClientErrorException {
 
         String url = "https://gitlab.com/api/v4/projects/" + id.toString() + "/issues";
@@ -46,7 +47,7 @@ public class IssueService {
             }
         }
 
-        String token = "glpat-yzJhzxFSm4fasdqqwCKD";
+        String token = Token.TOKEN;
         HttpHeaders httpHeadersRequest = new HttpHeaders();
         httpHeadersRequest.setBearerAuth(token);
         HttpEntity<Issue[]> httpRequest = new HttpEntity<>(null, httpHeadersRequest);
@@ -65,7 +66,6 @@ public class IssueService {
             siguientePagina = utils.funciones.getNextPageUrl(responseEntity.getHeaders());
             page++;
         }
-        List<IssueDef> issueDefList = issueList.stream().map(i -> IssueDef.ofRaw(i,commentService, sinceDays, maxPages)).toList();
-        return issueDefList;
+        return issueList;
     }
 }

@@ -1,5 +1,6 @@
 package aiss.GitLabMiner.controller;
 
+import aiss.GitLabMiner.model.Project;
 import aiss.GitLabMiner.service.ProjectService;
 import aiss.GitLabMiner.transformer.ProjectDef;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,9 @@ public class ProjectController {
 
     //GET http://localhost:8080/api/projects
     @GetMapping
-    public List<ProjectDef> findAll( @RequestParam("since") Integer since, @RequestParam("sinceIssues") Integer sinceIssues, @RequestParam("sinceCommits") Integer sinceCommits, @RequestParam("maxPages") Integer maxPages){
+    public List<Project> findAll( @RequestParam("since") Integer since, @RequestParam("sinceIssues") Integer sinceIssues, @RequestParam("sinceCommits") Integer sinceCommits, @RequestParam("maxPages") Integer maxPages){
         // a partir de un projectId, dame todos los commits y todos los issues (los commits e issues se le añaden en ofRaw)
-        List<ProjectDef> projectList = projectService.getAllProjects(since, sinceIssues, sinceCommits, maxPages);
+        List<Project> projectList = projectService.getAllProjects(since, sinceIssues, sinceCommits, maxPages);
         return projectList;
 
     }

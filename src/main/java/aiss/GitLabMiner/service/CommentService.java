@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import utils.Token;
 import utils.funciones;
 
 import java.time.LocalDateTime;
@@ -42,7 +43,7 @@ public class CommentService {
             }
         }
 
-        String token = "glpat-yzJhzxFSm4fasdqqwCKD";
+        String token = Token.TOKEN;
         HttpHeaders httpHeadersRequest = new HttpHeaders();
         httpHeadersRequest.setBearerAuth(token);
         HttpEntity<Comment[]> httpRequest = new HttpEntity<>(null, httpHeadersRequest);

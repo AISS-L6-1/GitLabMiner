@@ -16,7 +16,7 @@ class ProjectServiceTest {
     @Test
     @DisplayName("Test de getAllProjects")
     void getAllProjects() {
-        List<ProjectDef> projectList = projectService.getAllProjects(2,10,10,5);
+        List<Project> projectList = projectService.getAllProjects(2,10,10,5);
         assertFalse(projectList.isEmpty(),"The list of projects is empty");
         System.out.println(projectList);
     }

@@ -23,10 +23,8 @@ public class ProjectDef {
     private List<IssueDef> issues;
 
     //este metodo transforma un proyecto (modelo POJO) en el proyecto (modelo figura 2) al invocarlo se buscan todos los issues(que se transforman en IssueDef, ver getAllIssues) y todos los Comments del proyecto
-    public static ProjectDef ofRaw(Project project, CommitService commitService, IssueService issueService, Integer sinceIssues, Integer sinceCommits, Integer maxPages){
-        return new ProjectDef(project.getId(), project.getName(), project.getWebUrl(),
-                commitService.getAllCommits(Integer.valueOf(project.getId()), sinceCommits, maxPages),
-                issueService.getAllIssues(Integer.valueOf(project.getId()), sinceIssues, maxPages));
+    public static ProjectDef transformaProject(Project project, List<Commit> commitList,List<IssueDef> issueDefList){
+        return new ProjectDef(project.getId(), project.getName(), project.getWebUrl(),commitList,issueDefList);
     }
 
     public ProjectDef(){

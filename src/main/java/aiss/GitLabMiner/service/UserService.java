@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import utils.Token;
 import utils.funciones;
 
 import java.time.LocalDateTime;
@@ -42,7 +43,7 @@ public class UserService {
             }
         }
 
-        String token = "glpat-yzJhzxFSm4fasdqqwCKD";
+        String token = Token.TOKEN;
         HttpHeaders httpHeadersRequest = new HttpHeaders();
         httpHeadersRequest.setBearerAuth(token);
         HttpEntity<User[]> httpRequest = new HttpEntity<>(null, httpHeadersRequest);
@@ -64,10 +65,9 @@ public class UserService {
         return userList;
     }
 
-
     public User getUser(Integer id) {
         String url = "https://gitlab.com/api/v4/users/" + id.toString();
-        String token = "glpat-yzJhzxFSm4fasdqqwCKD";
+        String token = Token.TOKEN;
         HttpHeaders httpHeadersRequest = new HttpHeaders();
         httpHeadersRequest.setBearerAuth(token);
         HttpEntity<User> httpRequest = new HttpEntity<>(null, httpHeadersRequest);
