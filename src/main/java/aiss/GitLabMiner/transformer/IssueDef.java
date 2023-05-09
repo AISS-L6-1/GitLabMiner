@@ -4,9 +4,7 @@ import aiss.GitLabMiner.model.Comment;
 import aiss.GitLabMiner.model.Issue;
 import aiss.GitLabMiner.model.User;
 import aiss.GitLabMiner.service.CommentService;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.*;
 import java.util.List;
 
 
@@ -16,25 +14,14 @@ public class IssueDef {
 
     private String id;
     private String ref_id;
-
     private String title;
-
     private String description;
-
     private String state;
-
-    private String createdAt;
-
-    private String updatedAt;
-
-    private String closedAt;
-
-
+    private String created_at;
+    private String updated_at;
+    private String closed_at;
     private List<String> labels;
-
-
     private User author;
-
     private User assignee;
     private Integer upvotes;
     private Integer downvotes;
@@ -43,11 +30,11 @@ public class IssueDef {
 
 
     //metodo que usaremos para unir a nuestro Issue la lista de Comments que obtenemos con getCommentsFromId. Luego se hará una lista de IssueDef que será una propiedad de ProjectDef
-    public static IssueDef ofRaw(Issue issueRaw, CommentService commentService, Integer sinceDays, Integer maxPages){
+    public static IssueDef transformaIssue(Issue issueRaw, List<Comment> commentList){
         return new IssueDef(issueRaw.getId(), issueRaw.getRef_id(), issueRaw.getTitle(), issueRaw.getDescription(),
                 issueRaw.getState(), issueRaw.getCreatedAt(), issueRaw.getUpdatedAt(), issueRaw.getClosedAt(), issueRaw.getLabels(),
                 issueRaw.getUpvotes(), issueRaw.getDownvotes(), issueRaw.getAuthor(), issueRaw.getAssignee(),
-                commentService.getCommentsFromId(Integer.valueOf(issueRaw.getProject_id()), Integer.valueOf(issueRaw.getRef_id()), sinceDays, maxPages));
+                commentList);
     }
 
     public IssueDef(){
@@ -60,9 +47,9 @@ public class IssueDef {
         this.title = title;
         this.description = description;
         this.state = state;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.closedAt = closedAt;
+        this.created_at = createdAt;
+        this.updated_at = updatedAt;
+        this.closed_at = closedAt;
         this.labels = labels;
         this.upvotes = upvotes;
         this.downvotes = downvotes;
@@ -111,28 +98,28 @@ public class IssueDef {
         this.state = state;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
-    public String getUpdatedAt() {
-        return updatedAt;
+    public String getUpdated_at() {
+        return updated_at;
     }
 
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
     }
 
-    public String getClosedAt() {
-        return closedAt;
+    public String getClosed_at() {
+        return closed_at;
     }
 
-    public void setClosedAt(String closedAt) {
-        this.closedAt = closedAt;
+    public void setClosed_at(String closed_at) {
+        this.closed_at = closed_at;
     }
 
     public List<String> getLabels() {
@@ -191,9 +178,9 @@ public class IssueDef {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", state='" + state + '\'' +
-                ", createdAt='" + createdAt + '\'' +
-                ", updatedAt='" + updatedAt + '\'' +
-                ", closedAt=" + closedAt +
+                ", createdAt='" + created_at + '\'' +
+                ", updatedAt='" + updated_at + '\'' +
+                ", closedAt=" + closed_at +
                 ", labels=" + labels +
                 ", upvotes=" + upvotes +
                 ", downvotes=" + downvotes +

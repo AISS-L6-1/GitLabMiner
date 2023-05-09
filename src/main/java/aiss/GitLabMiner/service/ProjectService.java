@@ -1,6 +1,10 @@
 package aiss.GitLabMiner.service;
 
+import aiss.GitLabMiner.model.Comment;
+import aiss.GitLabMiner.model.Commit;
+import aiss.GitLabMiner.model.Issue;
 import aiss.GitLabMiner.model.Project;
+import aiss.GitLabMiner.transformer.IssueDef;
 import aiss.GitLabMiner.transformer.ProjectDef;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -10,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import utils.Token;
 import utils.funciones;
 
 import java.net.http.HttpResponse;
@@ -27,8 +32,10 @@ public class ProjectService {
     CommitService commitService;
     @Autowired
     IssueService issueService;
+    @Autowired
+    CommentService commentService;
 
-    public List<ProjectDef> getAllProjects(Integer sinceDays, Integer sinceIssues, Integer sinceCommits, Integer maxPages)
+    public List<Project> getAllProjects(Integer sinceDays, Integer sinceIssues, Integer sinceCommits, Integer maxPages)
             throws HttpClientErrorException {
         String url = "https://gitlab.com/api/v4/projects";
 
@@ -47,7 +54,7 @@ public class ProjectService {
             }
         }
 
-        String token = "glpat-yzJhzxFSm4fasdqqwCKD";
+        String token = Token.TOKEN;
         HttpHeaders httpHeadersRequest = new HttpHeaders();
         httpHeadersRequest.setBearerAuth(token);
         HttpEntity<Project[]> httpRequest = new HttpEntity<>(null, httpHeadersRequest);
@@ -66,20 +73,43 @@ public class ProjectService {
             siguientePagina = utils.funciones.getNextPageUrl(responseEntity.getHeaders());
             page++;
         }
-        List<ProjectDef> projectDefList = projectList.stream().map(p -> ProjectDef.ofRaw(p,commitService,issueService,sinceIssues, sinceCommits,  maxPages)).toList();
-        return projectDefList;
+        return projectList;
     }
 
     public ProjectDef getProjectFromId(Integer id, Integer sinceIssues, Integer sinceCommits ,Integer maxPages) {
 
         String url = "https://gitlab.com/api/v4/projects" + "/" + id.toString();
-        String token = "glpat-yzJhzxFSm4fasdqqwCKD";
+        String token = Token.TOKEN;
+
         HttpHeaders httpHeadersRequest = new HttpHeaders();
         httpHeadersRequest.setBearerAuth(token);
         HttpEntity<Project> httpRequest = new HttpEntity<>(null, httpHeadersRequest);
         ResponseEntity<Project> httpResponse = restTemplate.exchange(url, HttpMethod.GET, httpRequest, Project.class);
+
+        //EXTRACCION
+        //obtenemos el proyecto
         Project p = httpResponse.getBody();
-        return ProjectDef.ofRaw(p,commitService,issueService, sinceIssues, sinceCommits, maxPages);
+        //obtenemos sus commits
+        List<Commit> listCommits = commitService.getAllCommits(Integer.valueOf(p.getId()), sinceCommits, maxPages);
+        //obtenemos sus issues
+        List<Issue> ListIssues = issueService.getAllIssues(Integer.valueOf(p.getId()), sinceIssues, maxPages);
+
+        List<IssueDef> listIssueDef = new ArrayList<>();
+
+        //de cada issue obtenemos sus comments
+        if(!ListIssues.isEmpty()){
+            for (Issue i : ListIssues){
+                List<Comment> commentList = commentService.getCommentsFromId(Integer.valueOf(p.getId()),Integer.valueOf(i.getRef_id()),sinceIssues,maxPages);
+
+        //TRANSFORMACION
+            //transformamos los issues en IssueDef
+                IssueDef iDef = IssueDef.transformaIssue(i,commentList);
+                listIssueDef.add(iDef);
+            }
+        }
+            //transforma el proyecto en ProjectDef
+        ProjectDef pDef = ProjectDef.transformaProject(p, listCommits,listIssueDef);
+        return pDef;
     }
 
     public ProjectDef postProjectFromId(Integer id, Integer sinceIssues, Integer sinceCommits ,Integer maxPages){

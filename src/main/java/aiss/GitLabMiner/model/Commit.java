@@ -2,11 +2,6 @@
 package aiss.GitLabMiner.model;
 
 import javax.annotation.Generated;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -38,20 +33,20 @@ public class Commit {
     @JsonProperty("message")
     private String message;
     @JsonProperty("author_name")
-    private String authorName;
+    private String author_name;
     @JsonProperty("author_email")
-    private String authorEmail;
+    private String author_email;
     @JsonProperty("authored_date")
-    private String authoredDate;
+    private String authored_date;
     @JsonProperty("committer_name")
-    private String committerName;
+    private String committer_name;
     @JsonProperty("committer_email")
-    private String committerEmail;
+    private String committer_email;
     @JsonProperty("committed_date")
-    private String committedDate;
+    private String committed_date;
 
     @JsonProperty("web_url")
-    private String webUrl;
+    private String web_url;
 
     public Commit(){
 
@@ -61,13 +56,13 @@ public class Commit {
         this.id = id;
         this.title = title;
         this.message = message;
-        this.authorName = authorName;
-        this.authorEmail = authorEmail;
-        this.authoredDate = authoredDate;
-        this.committerName = committerName;
-        this.committerEmail = committerEmail;
-        this.committedDate = committedDate;
-        this.webUrl = webUrl;
+        this.author_name = authorName;
+        this.author_email = authorEmail;
+        this.authored_date = authoredDate;
+        this.committer_name = committerName;
+        this.committer_email = committerEmail;
+        this.committed_date = committedDate;
+        this.web_url = webUrl;
     }
 
     @JsonProperty("id")
@@ -101,73 +96,73 @@ public class Commit {
     }
 
     @JsonProperty("author_name")
-    public String getAuthorName() {
-        return authorName;
+    public String getAuthor_name() {
+        return author_name;
     }
 
     @JsonProperty("author_name")
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
+    public void setAuthor_name(String author_name) {
+        this.author_name = author_name;
     }
 
     @JsonProperty("author_email")
-    public String getAuthorEmail() {
-        return authorEmail;
+    public String getAuthor_email() {
+        return author_email;
     }
 
     @JsonProperty("author_email")
-    public void setAuthorEmail(String authorEmail) {
-        this.authorEmail = authorEmail;
+    public void setAuthor_email(String author_email) {
+        this.author_email = author_email;
     }
 
     @JsonProperty("authored_date")
-    public String getAuthoredDate() {
-        return authoredDate;
+    public String getAuthored_date() {
+        return authored_date;
     }
 
     @JsonProperty("authored_date")
-    public void setAuthoredDate(String authoredDate) {
-        this.authoredDate = authoredDate;
+    public void setAuthored_date(String authored_date) {
+        this.authored_date = authored_date;
     }
 
     @JsonProperty("committer_name")
-    public String getCommitterName() {
-        return committerName;
+    public String getCommitter_name() {
+        return committer_name;
     }
 
     @JsonProperty("committer_name")
-    public void setCommitterName(String committerName) {
-        this.committerName = committerName;
+    public void setCommitter_name(String committer_name) {
+        this.committer_name = committer_name;
     }
 
     @JsonProperty("committer_email")
-    public String getCommitterEmail() {
-        return committerEmail;
+    public String getCommitter_email() {
+        return committer_email;
     }
 
     @JsonProperty("committer_email")
-    public void setCommitterEmail(String committerEmail) {
-        this.committerEmail = committerEmail;
+    public void setCommitter_email(String committer_email) {
+        this.committer_email = committer_email;
     }
 
     @JsonProperty("committed_date")
-    public String getCommittedDate() {
-        return committedDate;
+    public String getCommitted_date() {
+        return committed_date;
     }
 
     @JsonProperty("committed_date")
-    public void setCommittedDate(String committedDate) {
-        this.committedDate = committedDate;
+    public void setCommitted_date(String committed_date) {
+        this.committed_date = committed_date;
     }
 
     @JsonProperty("web_url")
-    public String getWebUrl() {
-        return webUrl;
+    public String getWeb_url() {
+        return web_url;
     }
 
     @JsonProperty("web_url")
-    public void setWebUrl(String webUrl) {
-        this.webUrl = webUrl;
+    public void setWeb_url(String web_url) {
+        this.web_url = web_url;
     }
 
     @Override
@@ -187,31 +182,31 @@ public class Commit {
         sb.append(',');
         sb.append("authorName");
         sb.append('=');
-        sb.append(((this.authorName == null)?"<null>":this.authorName));
+        sb.append(((this.author_name == null)?"<null>":this.author_name));
         sb.append(',');
         sb.append("authorEmail");
         sb.append('=');
-        sb.append(((this.authorEmail == null)?"<null>":this.authorEmail));
+        sb.append(((this.author_email == null)?"<null>":this.author_email));
         sb.append(',');
         sb.append("authoredDate");
         sb.append('=');
-        sb.append(((this.authoredDate == null)?"<null>":this.authoredDate));
+        sb.append(((this.authored_date == null)?"<null>":this.authored_date));
         sb.append(',');
         sb.append("committerName");
         sb.append('=');
-        sb.append(((this.committerName == null)?"<null>":this.committerName));
+        sb.append(((this.committer_name == null)?"<null>":this.committer_name));
         sb.append(',');
         sb.append("committerEmail");
         sb.append('=');
-        sb.append(((this.committerEmail == null)?"<null>":this.committerEmail));
+        sb.append(((this.committer_email == null)?"<null>":this.committer_email));
         sb.append(',');
         sb.append("committedDate");
         sb.append('=');
-        sb.append(((this.committedDate == null)?"<null>":this.committedDate));
+        sb.append(((this.committed_date == null)?"<null>":this.committed_date));
         sb.append(',');
         sb.append("webUrl");
         sb.append('=');
-        sb.append(((this.webUrl == null)?"<null>":this.webUrl));
+        sb.append(((this.web_url == null)?"<null>":this.web_url));
         sb.append(',');
         if (sb.charAt((sb.length()- 1)) == ',') {
             sb.setCharAt((sb.length()- 1), ']');
