@@ -84,7 +84,7 @@ public class ProjectService {
 
     public void postProjectFromId(Integer id, Integer sinceIssues, Integer sinceCommits ,Integer maxPages){
 
-        String url = "http://localhost:8080/api/projects";
+        String url = "http://localhost:8080/gitminer/projects";
 
         HttpHeaders httpHeadersRequest = new HttpHeaders();
         HttpEntity<ProjectDef> httpRequest = new HttpEntity<>(null, httpHeadersRequest);
