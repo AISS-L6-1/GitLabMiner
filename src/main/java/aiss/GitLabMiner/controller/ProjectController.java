@@ -34,8 +34,8 @@ public class ProjectController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/{id}")
-    public void create(@PathVariable Integer id, @RequestParam("sinceIssues") Integer sinceIssues, @RequestParam("sinceCommits") Integer sinceCommits, @RequestParam("maxPages") Integer maxPages){
-        projectService.postProjectFromId(id,sinceIssues,sinceCommits,maxPages);
-
+    public ProjectDef create(@PathVariable Integer id, @RequestParam("sinceIssues") Integer sinceIssues, @RequestParam("sinceCommits") Integer sinceCommits, @RequestParam("maxPages") Integer maxPages){
+        ProjectDef projectDef = projectService.postProjectFromId(id,sinceIssues,sinceCommits,maxPages);
+        return projectDef;
     }
 }

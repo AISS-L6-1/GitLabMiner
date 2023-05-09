@@ -82,7 +82,7 @@ public class ProjectService {
         return ProjectDef.ofRaw(p,commitService,issueService, sinceIssues, sinceCommits, maxPages);
     }
 
-    public void postProjectFromId(Integer id, Integer sinceIssues, Integer sinceCommits ,Integer maxPages){
+    public ProjectDef postProjectFromId(Integer id, Integer sinceIssues, Integer sinceCommits ,Integer maxPages){
 
         String url = "http://localhost:8080/gitminer/projects";
 
@@ -92,5 +92,6 @@ public class ProjectService {
         ProjectDef proyecto = getProjectFromId(id,sinceIssues,sinceCommits,maxPages);
 
         ResponseEntity<ProjectDef> httpResponse = restTemplate.postForEntity(url, proyecto, ProjectDef.class);
+        return httpResponse.getBody();
     }
 }
