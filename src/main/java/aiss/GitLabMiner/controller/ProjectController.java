@@ -31,7 +31,7 @@ public class ProjectController {
         return project;
     }
 
-    //POST http://localhost:8081/api/projects/{id} // <-- este post lo tengo que redirigir a GHM o algo así?
+    //POST http://localhost:8081/api/projects/{id} //
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/{id}")
