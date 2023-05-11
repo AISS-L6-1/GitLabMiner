@@ -76,7 +76,7 @@ public class ProjectService {
         return projectList;
     }
 
-    public ProjectDef getProjectFromId(Integer id, Integer sinceIssues, Integer sinceCommits ,Integer maxPages) {
+    public ProjectDef getProjectFromId(Integer id, Integer sinceIssues, Integer sinceCommits ,Integer maxPages) throws HttpClientErrorException{
 
         String url = "https://gitlab.com/api/v4/projects" + "/" + id.toString();
         String token = Token.TOKEN;
