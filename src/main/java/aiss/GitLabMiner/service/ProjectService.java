@@ -13,6 +13,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import utils.Token;
 import utils.funciones;
@@ -55,6 +56,7 @@ public class ProjectService {
         }
 
         String token = Token.TOKEN;
+
         HttpHeaders httpHeadersRequest = new HttpHeaders();
         httpHeadersRequest.setBearerAuth(token);
         HttpEntity<Project[]> httpRequest = new HttpEntity<>(null, httpHeadersRequest);
@@ -76,7 +78,8 @@ public class ProjectService {
         return projectList;
     }
 
-    public ProjectDef getProjectFromId(Integer id, Integer sinceIssues, Integer sinceCommits ,Integer maxPages) throws HttpClientErrorException{
+    public ProjectDef getProjectFromId(Integer id, Integer sinceIssues, Integer sinceCommits ,Integer maxPages)
+            throws HttpClientErrorException{
 
         String url = "https://gitlab.com/api/v4/projects" + "/" + id.toString();
         String token = Token.TOKEN;
@@ -112,7 +115,8 @@ public class ProjectService {
         return pDef;
     }
 
-    public ProjectDef postProjectFromId(Integer id, Integer sinceIssues, Integer sinceCommits ,Integer maxPages){
+    public ProjectDef postProjectFromId(Integer id, Integer sinceIssues, Integer sinceCommits ,Integer maxPages)
+            throws RestClientException{
 
         String url = "http://localhost:8080/gitminer/projects";
 
