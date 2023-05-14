@@ -18,7 +18,7 @@ class IssueServiceTest {
     @Test
     @DisplayName("Test de getAllIssues")
     void getAllIssues() {
-        List<Issue> issueList = issueService.getAllIssues(20699, 1,2);
+        List<Issue> issueList = issueService.getAllIssues(20699, 10,2);
         assertFalse(issueList.isEmpty(), "The list of issues is empty");
         System.out.println(issueList);
     }
